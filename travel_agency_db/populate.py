@@ -54,27 +54,6 @@ db.commit()
 
 
 ##############################
-# Populate `coach` table    ##
-##############################
-with open('./coaches.txt', 'r') as f:
-    raw_vals = f.readlines()
-
-vals = []
-for val in raw_vals:
-    val = val.strip('\n').split(',')
-    val[0] = int(val[0])
-    val[1] = int(val[1])
-    val[2] = int(val[2])
-    vals.append(tuple(val))
-
-print(vals)
-
-stmt = "INSERT INTO coach (idcoach, nb_seats_corr, nb_seats_win) VALUES (%s, %s, %s)"
-cursor.executemany(stmt, vals)
-db.commit()
-
-
-##############################
 # Populate `train` table    ##
 ##############################
 with open('./trains.txt', 'r') as f:
