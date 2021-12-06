@@ -1,0 +1,54 @@
+<div class="container mt-5">
+  <div class="card"><div class="card-body">
+    <div class="d-flex justify-content-center h-100">
+      <div>
+        <div class="d-flex justify-content-center">
+          <h3 id="form-title">Votre voyage...</h3>
+        </div>
+        <div class="d-flex justify-content-center">
+
+          <form method="POST" action="/booking/search">
+
+            <div class="input-group mb-3">
+              <div class="input-group-append">
+                <span class="input-group-text"><i class="fas fa-map-pin"></i></span>
+              </div>
+              <input type="text" class="form-control" name="from" placeholder="Départ" required>
+
+              <div class="input-group-append ml-3">
+                <span class="input-group-text"><i class="fas fa-map-pin"></i></span>
+              </div>
+              <input type="text" class="form-control" name="to" placeholder="Arrivée" required>
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-append">
+                <span class="input-group-text"><i class="fas fa-calendar-day"></i></span>
+              </div>
+              <input type="date" name="date" class="form-control" required>
+
+              <div class="input-group-append ml-3">
+                <span class="input-group-text"><i class="fas fa-clock"></i></span>
+              </div>
+              <input type="time" name="time" class="form-control" required>
+            </div>
+            
+            <div class="d-flex justify-content-center mt-3">
+              <input class="btn btn-warning" type="submit" value="Rechercher">
+            </div>
+
+          </form>
+        </div>
+
+        
+        <div class="mt-4">
+			<% if (!locals.user) { %> 
+			<div class="d-flex justify-content-center">
+				Vous avez un compte SNCF ? <p><a href="#" class="ml-2">Connectez-vous</a> pour profiter de vos avantages.</p>
+			</div>
+			<% } %> 
+        </div>
+      </div>
+    </div>
+  </div> 
+  </div>
+  </div>

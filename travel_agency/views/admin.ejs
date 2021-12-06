@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+        <script src="/javascripts/adminDash.js" defer></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous" defer></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" defer></script>
+
+    </head>
+    <body>
+        <%- include('./partials/navbar.ejs') %>
+        <div class="container-fluid h-100">
+            <div class="row h-100">
+                <div class="col-md-2 container flex justify-content-center pt-3 border-right">
+                    <h2>Tables</h2>
+                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link mt-3" id="v-pills-travel-tab" data-toggle="pill" href="#v-pills-travel" role="tab" aria-controls="v-pills-travel" aria-selected="true">Voyage</a>
+                        <a class="nav-link mt-3" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Client</a>
+                        <a class="nav-link mt-3" id="v-pills-train-tab" data-toggle="pill" href="#v-pills-train" role="tab" aria-controls="v-pills-train" aria-selected="false">Train</a>
+                        <a class="nav-link mt-3" id="v-pills-discount-tab" data-toggle="pill" href="#v-pills-discount" role="tab" aria-controls="v-pills-discount" aria-selected="false">Carte de réduction</a>
+                        <a class="nav-link mt-3" id="v-pills-station-tab" data-toggle="pill" href="#v-pills-station" role="tab" aria-controls="v-pills-station" aria-selected="false">Gare</a>
+                    </div>
+                    <div id="messages" hidden></div>
+                </div>
+                <div class="container col-md p-3">
+                    <div class="tab-content ml-3" id="nav-tabContent">
+                        <div class="tab-content" id="v-pills-tabContent">
+                            <div class="tab-pane fade" id="v-pills-travel" role="tabpanel" aria-labelledby="v-pills-travel-tab">
+                                <h2>Voyages</h2>    
+                                <hr>
+                                <div class="container-fluid d-flex">
+                                    <div class="container h-75 overflow-auto">
+                                        <table class="table table-striped table-bordered h-75">
+                                            <thead>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Départ</th>
+                                                <th scope="col">Arrivée</th>
+                                                <th scope="col">Date/Heure de départ</th>
+                                                <th scope="col">Date/Heure d'arrivée</th>
+                                                <th scope="col">Prix</th>
+                                                <th scope="col">Train n°</th>
+                                                <th scope="col">Nb. de sièges couloir</th>
+                                                <th scope="col">Nb. de sièges fenetre</th>
+                                            </thead>
+                                            <tbody id="travelBodyTable">
+                                                <tr>
+                                                    <th scope="row">-</th>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                </tr>
+                                            </tbody> 
+                                        </table>
+                                        <button id="btnTravelTable" class="btn btn-warning">Afficher la table</button>
+                                    </div>
+
+                                    <div class="container border-left">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="create-tab" data-toggle="tab" href="#create" role="tab" aria-controls="home" aria-selected="true">Créer</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="update-tab" data-toggle="tab" href="#update" role="tab" aria-controls="profile" aria-selected="false">Modifier</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="delete-tab" data-toggle="tab" href="#delete" role="tab" aria-controls="contact" aria-selected="false">Supprimer</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content mt-2" id="myTabContent">
+                                            <div class="tab-pane fade show active" id="create" role="tabpanel" aria-labelledby="create-tab">
+                                                <form id="crTravel">
+                                                    <div class="form-group">
+                                                        <label for="depStation">ID Gare de Départ</label>
+                                                        <input class="form-control form-control-sm" type="number" name="depStation" min="1" step="1" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="arrStation">ID Gare d'Arrivée</label>
+                                                        <input class="form-control form-control-sm" type="number" name="arrStation" min="1" step="1" required>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-6">
+                                                            <label for="dDep">Date départ</label>
+                                                            <input class="form-control form-control-sm" type="date" name="dDep" required>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label for="tDep">Heure départ</label>
+                                                            <input class="form-control form-control-sm" type="time" name="tDep" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-6">
+                                                            <label for="dArr">Date arrivée</label>
+                                                            <input class="form-control form-control-sm" type="date" name="dArr" required>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label for="tArr">Heure arrive</label>
+                                                            <input class="form-control form-control-sm" type="time" name="tArr" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-6">
+                                                            <label for="prix">Prix</label>
+                                                            <input class="form-control form-control-sm" type="number" name="prix" min="0" step="0.5" required>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label for="idTrain">Train n°</label>
+                                                            <input class="form-control form-control-sm" type="number" name="idTrain" min="1" step="1" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-6">
+                                                            <label for="nbCorr">Nb. Siège Couloir</label>
+                                                            <input class="form-control form-control-sm" type="number" name="nbCorr" min="1" max="400" step="1" required>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label for="nbWin">Nb. Siège Fenêtre</label>
+                                                            <input class="form-control form-control-sm" type="number" name="nbWin" min="1" max="400" step="1" required>
+                                                        </div>
+                                                    </div>
+                                                    <button class="btn btn-warning">Créer</button>
+                                                </form>
+                                            </div>
+                                            <div class="tab-pane fade" id="update" role="tabpanel" aria-labelledby="update-tab">
+                                                <form id="upTravel">
+                                                    <div class="form-group">
+                                                        <label for="idTravel">ID du Voyage</label>
+                                                        <input class="form-control form-control-sm" type="number" name="idTravel" min="1" step="1" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="updateValues">Valeurs brutes</label>
+                                                        <input class="form-control form-control-sm" type="text" name="updateValues" required>
+                                                    </div>
+                                                    <button class="btn btn-warning">Modifier</button>
+                                                </form>
+                                            </div>
+                                            <div class="tab-pane fade" id="delete" role="tabpanel" aria-labelledby="delete-tab">
+                                                <form id="delTravel">
+                                                    <div class="form-group">
+                                                        <label for="idTravel">ID du Voyage</label>
+                                                        <input class="form-control form-control-sm" type="number" name="idTravel" min="1" step="1" required>
+                                                    </div>
+                                                    <button class="btn btn-warning">Supprimer</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                <h2>Clients</h2>
+                                <hr>
+                                <div class="container-fluid d-flex">
+                                    <div class="container h-75 overflow-auto">
+                                        <table class="table table-striped table-bordered h-75">
+                                            <thead>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Prénom</th>
+                                                <th scope="col">Nom</th>
+                                                <th scope="col">Date de naissance</th>
+                                                <th scope="col">Carte de réduction</th>
+                                            </thead>
+                                            <tbody id="clientBodyTable">
+                                                <tr>
+                                                    <th scope="row">-</th>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="mt-1">
+                                            <small>Légende: 01 - Avantage Jeune, 02 - Avantage Famille, 03 - Avantage Mobilité, 04 - Tarif Standard</small>
+                                        </div>
+                                        <button class="btn btn-warning mt-3" id="btnClientTable" role="button">Afficher la table</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="v-pills-train" role="tabpanel" aria-labelledby="v-pills-train-tab">
+                                <h2>Train</h2>
+                                <hr>
+                                <div class="container-fluid d-flex">
+                                    <div class="container h-75 overflow-auto">
+                                        <table class="table table-striped table-bordered h-75">
+                                            <thead>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Voiture 1</th>
+                                                <th scope="col">Voiture 2</th>
+                                                <th scope="col">Voiture 3</th>
+                                                <th scope="col">Voiture 4</th>
+                                                <th scope="col">Voiture 5</th>
+                                                <th scope="col">Voiture 6</th>
+                                                <th scope="col">Voiture 7</th>
+                                                <th scope="col">Voiture 8</th>
+                                            </thead>
+                                            <tbody id="trainBodyTable">
+                                                <tr>
+                                                    <th scope="row">-</th>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                </tr>
+                                            </tbody> 
+                                        </table>
+                                        <button id="btnTrainTable" class="btn btn-warning" role="button">Afficher la table</button>
+                                    </div>
+                                    <div class="container border-left">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="createTrain-tab" data-toggle="tab" href="#createTrain" role="tab" aria-selected="true">Créer</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="deleteTrain-tab" data-toggle="tab" href="#deleteTrain" role="tab" aria-selected="false">Supprimer</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content mt-2">
+                                            <div class="tab-pane fade show active" id="createTrain" role="tabpanel" aria-labelledby="createTrain-tab">
+                                                <form id="crTrain">
+                                                    <div class="form-group">
+                                                        La création d'un train est automatique. Aucun paramètre requis.
+                                                    </div>
+                                                    
+                                                    <button class="btn btn-warning">Créer</button>
+                                                </form>
+                                            </div>
+                                            <div class="tab-pane fade" id="deleteTrain" role="tabpanel" aria-labelledby="deleteTrain-tab">
+                                                <form id="delTrain">
+                                                    <div class="form-group">
+                                                        <label for="idTrain">ID du Train</label>
+                                                        <input class="form-control form-control-sm" type="number" name="idTrain" min="1" step="1" required>
+                                                    </div>
+                                                    <button class="btn btn-warning">Supprimer</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="v-pills-discount" role="tabpanel" aria-labelledby="v-pills-discount-tab">
+                                <h2>Carte de réduction</h2>
+                                <hr>
+                                <div class="container-fluid d-flex">
+                                    <div class="container h-75 overflow-auto">
+                                        <table class="table table-striped table-bordered h-75">
+                                            <thead>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Pourcentage</th>
+                                            </thead>
+                                            <tbody id="discBodyTable">
+                                                <tr>
+                                                    <th scope="row">-</th>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                </tr>
+                                            </tbody> 
+                                        </table>
+                                        <button id="btnDiscTable" class="btn btn-warning" role="button">Afficher la table</button>
+                                    </div>
+                                    <div class="container border-left">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="createDisc-tab" data-toggle="tab" href="#createDisc" role="tab" aria-selected="true">Créer</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="updtaeDisc-tab" data-toggle="tab" href="#updateDisc" role="tab" aria-selected="true">Modifier</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="deleteDisc-tab" data-toggle="tab" href="#deleteDisc" role="tab" aria-selected="false">Supprimer</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content mt-2">
+                                            <div class="tab-pane fade show active" id="createDisc" role="tabpanel" aria-labelledby="updateDisc-tab">
+                                                <form id="crDisc">
+                                                    <div class="form-group">
+                                                        <label for="discDesc">Description de la Carte de réduction</label>
+                                                        <textarea class="form-control" id="discDesc" name="discDesc" rows="3" required></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="discPercent">Pourcentage de réduction</label>
+                                                        <input class="form-control" type="number" id="discPercent" name="discPercent" min="0" max="1" step="0.05" required>
+                                                    </div>
+                                                    <input type="submit" class="btn btn-warning" value="Créer">
+                                                </form>
+                                            </div>
+                                            <div class="tab-pane fade show" id="updateDisc" role="tabpanel" aria-labelledby="createDisc-tab">
+                                                <form id="upDisc">
+                                                    <div class="form-group">
+                                                        <label for="discDesc">ID de la Carte de réduction</label>
+                                                        <input type="number" class="form-control" name="discID" min="1" step="1" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="discPercent">Pourcentage de réduction</label>
+                                                        <input class="form-control" type="number" name="discPercent" min="0" max="1" step="0.05" required>
+                                                    </div>
+                                                    
+                                                    <button class="btn btn-warning">Modifier</button>
+                                                </form>
+                                            </div>
+                                            <div class="tab-pane fade" id="deleteDisc" role="tabpanel" aria-labelledby="deleteDisc-tab">
+                                                <form id="delDisc">
+                                                    <div class="form-group">
+                                                        <label for="discDesc">ID de la Carte de réduction</label>
+                                                        <input type="number" class="form-control" name="discID" min="1" step="1" required>
+                                                    </div>
+                                                    <button class="btn btn-warning" id="delDisc">Supprimer</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="v-pills-station" role="tabpanel" aria-labelledby="v-pills-station-tab">
+                                <h2>Gare</h2>
+                                <div class="container-fluid d-flex">
+                                    <div class="container overflow-auto">
+                                        <table class="table table-striped table-bordered">
+                                            <thead>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Ville</th>
+                                                <th scope="col">Nom de la gare</th>
+                                            </thead>
+                                            <tbody id="stationBodyTable">
+                                                <tr>
+                                                    <th scope="row">-</th>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <button class="btn btn-warning mt-3" id="btnStationTable" role="button">Afficher la table</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous" defer></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" defer></script>
+
+  </head>
+  <body>
+    <%- include('./partials/navbar.ejs') %>
+    <%- include('./partials/search.ejs') %> 
+    <div class="container-fluid">
+		<% if (locals.result) { %>
+			<% for (travel of locals.result) { %>
+				<div class="container d-flex align-items-center rounded border-light mt-5 mb-2 bg-secondary text-white p-3">
+					<div class="flex h-5"><strong><%= travel.station_from.station_city %></strong> <br> <%= travel.station_from.station_name %></div>
+					<div class="ml-2"><i class="fas fa-long-arrow-alt-right fa-2x"></i></div>
+					<div class="ml-2"><strong><%= travel.station_to.station_city %></strong> <br> <%= travel.station_to.station_name %></div>
+					<div class="ml-2">
+						<div><strong>Départ:</strong> <%= moment(travel.datetime_from).format('Do MMMM[,] HH[h]mm') %></div>
+						<div><strong>Durée:</strong> <%= moment.duration(travel.datetime_to-travel.datetime_from).humanize() %></div>
+					</div>
+					<a href="/booking/travel/<%= travel.idtravel %>" role="button" class="bg-warning text-dark rounded-right p-2 ml-auto" style="font-size: x-large; font-weight: bold;"><%= travel.price %><sup><i class="fas fa-euro-sign text-dark"></i></sup></a>
+				</div>
+				
+				
+		<% }} else { %>
+			<div class="container bg-alert d-flex align-items-center rounded mt-5 mb-2 bg-secondary text-white p-3">
+				Aucun voyage trouvé, modifiez votre recherche.
+			</div>
+		<% } %>
+		
+    </div>
+
+  </body>
+</html>

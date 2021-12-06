@@ -1,0 +1,7 @@
+{
+    "host": "localhost",
+    "user": "root",
+    "password": "your_pass_here",
+    "database": "travel_agency_db",
+    "insecureAuth": true
+}

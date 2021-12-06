@@ -1,0 +1,4 @@
+1,Avantage Jeune - De 18 à 27 ans,0.25
+2,Avantage Famille - Pour les familles,0.3
+3,Avantage Mobilité - De 55 à 75 ans,0.5
+4,Tarif standard",1.0

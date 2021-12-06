@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+        <script src="/javascripts/processAccountEdit.js" defer></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous" defer></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" defer></script>
+
+    </head>
+    <body>
+        <%- include('./partials/navbar.ejs') %>
+
+        
+        <div class="alert alert-success mr-5 ml-5 mt-5" id="messages" hidden></div>  
+ 
+        
+        <div class="row mt-5">
+            <div class="col-md-6 p-5">
+                <h4>Informations de votre compte</h4>
+                <div class="form-row">
+                    <form>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="firstName">Prénom</label>
+                                <input type="text" name="firstName" id="firstName" class="form-control" value= <%= user.firstName %> readonly>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="lastName">Nom</label>
+                                <input type="text" name="lastName" id="lastName" class="form-control" value= <%= user.lastName %> readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="dateBirth">Date de Naissance</label>
+                                <input type="text" name="dateBirth" id="dateBirth" class="form-control" value= <%= moment(user.dateOfBirth).format('DD[/]MM[/]YYYY') %> readonly>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="discount">Carte de réduction</label>
+                                <select name="discount" id="discount" class="form-control" aria-placeholder="Carte de réduction">
+                                    <option value="4">Aucune</option>
+                                    <option value="1">Jeune (de 18 à 27 ans)</option>
+                                    <option value="2">Famille</option>
+                                    <option value="3">Mobilité (de 55 ans 75 ans)</option>
+                                </select>
+                                <small class="form-text text-muted">Actuelle: <%= user.discountDesc %></small>
+                            </div>
+                        </div>
+                        <button class="btn btn-warning" id="edit">Modifier</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-6 border-left p-5">
+                <h4>Vos voyages</h4>
+                <div class="container flex ">
+                <% if (locals.tickets) { %>
+                    <div class="container mb-5">
+                        <h6 class="mb-2">Voyages à venir</h6>
+                    
+                    <% for (i in travels) { %>
+                        <% if (moment(travels[i].datetime_from) > moment.now()) { %> 
+                        <div class="container d-flex align-items-center rounded border-light mb-3 bg-secondary text-white p-3">
+                            <div class="flex h-5"><strong><%= travels[i].station_from.station_city %></strong> <br> <%= travels[i].station_from.station_name %></div>
+                            <div class="ml-2"><i class="fas fa-long-arrow-alt-right fa-2x"></i></div>
+                            <div class="ml-2"><strong><%= travels[i].station_to.station_city %></strong> <br> <%= travels[i].station_to.station_name %></div>
+                            <div class="ml-5">
+                                <div><strong>Départ:</strong> <%= moment(travels[i].datetime_from).format('Do MMMM[,] H[h]mm') %></div>
+                                <div><strong>Durée:</strong> <%= moment.duration(travels[i].datetime_to-travels[i].datetime_from).humanize() %></div>
+                            </div>
+                            <div class="ml-auto">
+                                <a href="/booking/travel/<%= travels[i].idtravel %>/confirm" class="btn btn-warning">Consulter votre billet</a>
+                            </div>
+                        </div>
+                        <% } else { %>
+                        <div class="container">Aucun voyage à venir. <a href="/booking">Consultez nos trajets !</a></div>
+                        <% } %> 
+                    </div>
+                    <% } %> 
+                        
+                <% } else { %>
+                    <div class="container-fluid">
+                        Vous n'avez aucune réservation pour le moment. <a href="/booking">Consultez nos trajets !</a>
+                    </div>
+                <% } %>
+                
+                
+                <% if (locals.travel) { %> 
+                    <div class="container">
+                        <h6 class="mb-2">Voyages passés</h6>
+
+                        <% for (i in travels) { %>
+                            <% if (moment(travels[i].datetime_from) < moment.now()) { %> 
+                            <div class="container d-flex align-items-center rounded border-light mb-3 bg-secondary text-white p-3">
+                                <div class="flex h-5"><strong><%= travels[i].station_from.station_city %></strong> <br> <%= travels[i].station_from.station_name %></div>
+                                <div class="ml-2"><i class="fas fa-long-arrow-alt-right fa-2x"></i></div>
+                                <div class="ml-2"><strong><%= travels[i].station_to.station_city %></strong> <br> <%= travels[i].station_to.station_name %></div>
+                                <div class="ml-5">
+                                    <div><strong>Départ:</strong> <%= moment(travels[i].datetime_from).format('Do MMMM[,] H[h]mm') %></div>
+                                    <div><strong>Durée:</strong> <%= moment.duration(travels[i].datetime_to-travels[i].datetime_from).humanize() %></div>
+                                </div>    
+                            </div>
+                            <% } else { %> 
+                            <div class="container-fluid">
+                                Aucun voyage passé.
+                            </div>
+                            <% } %> 
+                        </div>
+                        <% }} %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

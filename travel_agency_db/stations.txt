@@ -1,0 +1,12 @@
+1,Gare de Lyon,Paris
+2,Part-Dieu,Lyon
+3,Perrache,Lyon
+4,Saint-Jean,Bordeaux
+5,Matabiau,Toulouse
+6,Montparnasse,Paris
+7,Flandres,Lille
+8,Saint-Charles,Marseille
+9,Gare de Brest,Brest
+10,Strasbourg-Ville,Strasbourg
+11,Gare de Tours,Tours
+12,Gare de Perpignan,Perpignan

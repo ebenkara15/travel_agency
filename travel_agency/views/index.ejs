@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous" defer></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" defer></script>
+
+  </head>
+  <body>
+    <%- include('./partials/navbar.ejs') %>
+
+    <div class="container p-3">
+		  <div class="p-5 mb-4 bg-light rounded-3">
+			<div class="container-fluid py-5">
+			  <div class="d-flex"><img src="/images/tgv.svg" alt="TGV icone" height="50px"> <h1 class="display-5 ml-3 fw-bold"><%= title %></h1></div>
+			  <p class="col-md-8 fs-4">En utilisant ce site, vous pouvez consulter et réserver vos voyages en TGV partout en France.</p>
+			  <p class="col-md-8 fs-4">Ne manquez pas nos cartes de réduction pour profiter de vos avantages !</p>
+			</div>
+		  </div>
+	  
+		  <div class="row align-items-md-stretch">
+			<div class="col-md-6">
+			  <div class="h-100 p-5 text-white bg-dark rounded-3">
+				<h2>Plateforme administrateur <i class="fas fa-user-lock ml-2"></i></h2>
+
+				<p>Ajoutez ou modifiez des trajets, ajoutez des trains et gérez vos vos réservations en accédant à la plateforme d'administration. Plusieurs fonctionnalités vous permettent d'admnistrer les voyages de vos clients en quelques clics.</p>
+				<a href="/admin" class="btn btn-outline-light" role="button">Ouvir la plateforme</a>
+			  </div>
+			</div>
+			<div class="col-md-6">
+			  <div class="h-100 p-5 bg-light border rounded-3">
+				<h2>Clients <i class="fas fa-users ml-2"></i></h2>
+				<p>Clients réguliers ou voyageurs occasionnels, créez votre compte client et profitez des offres de voyages à pris réduit grâce à votre carte de réduction !</p>
+				<p><a href="/users/register" class="btn btn-outline-secondary" role="button">Créer un compte</a></p> 
+				<p>Déjà client ? <a href="/users/login" class="btn btn-outline-secondary" role="button">Connexion</a></p>
+			  </div>
+			</div>
+		  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= title %></title>
+		<link rel='stylesheet' href='/stylesheets/style.css'/>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+		<script src="/javascripts/processConfirm.js" defer></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" defer></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous" defer></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" defer></script>
+
+
+	</head>
+	<body>
+		<%- include('./partials/navbar.ejs') %>
+		<% if (!locals.travel) { %>
+		<div class="container-fluid mt-10">
+			<div class="alert alert-danger mt-10" role="alert">
+				Oups... Aucune trajet ne correspond à votre recherche. <br>
+				<a href="/booking">Retour à la recherche</a>
+			</div>
+		</div>
+		<% } else { %>
+		<div class="container mt-5"><h1>Finalisez votre réservation</h1></div>
+			<div class="container rounded mt-5 mb-2 bg-secondary text-white p-3">
+				<div class="container d-flex align-items-center">
+					<div class="flex h-5"><strong><%= travel.station_from.station_city %></strong> <br> <%= travel.station_from.station_name %></div>
+					<div class="ml-2"><i class="fas fa-long-arrow-alt-right fa-2x"></i></div>
+					<div class="ml-2"><strong><%= travel.station_to.station_city %></strong> <br> <%= travel.station_to.station_name %></div>
+					<div class="ml-2">
+						<div> <strong>Départ:</strong> <%= moment(travel.datetime_from).format('Do MMMM[,] HH[h]mm') %></div>
+						<div><strong>Durée:</strong> <%= moment.duration(travel.datetime_to-travel.datetime_from).humanize() %></div>
+					</div>
+					
+					<a class="text-white txt-decoration-none ml-auto" id="collapseBtn" data-toggle="collapse" href="#wrapperCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+						Afficher les détails <i id="iconeCollapse" class="fas fa-chevron-down ml-2"></i>
+					</a>
+
+					<span class="bg-warning text-dark rounded p-2 ml-auto" style="font-size: x-large; font-weight: bold;"><%= travel.price %><sup><i class="fas fa-euro-sign text-dark"></i></sup></span>
+
+				</div>
+				<div class="collapse" id="wrapperCollapse">
+					<div class="d-flex mt-2 border-top p-3">
+						<div class="container">
+							Choisissez votre place: 
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="sideRadio" id="corrRadio" value="corr" checked>
+								<label class="form-check-label" for="corrRadio">
+								Couloir
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="sideRadio" id="winRadio" value="win">
+								<label class="form-check-label" for="winRadio">
+								Fenêtre
+								</label>
+							</div>
+						</div>
+						<div class="container">
+							Places restantes:
+							<div>
+								<% if (travel.nb_seats_corr) { %> 
+								<i class="fas fa-check text-success mr-2"></i>Couloir : <%= travel.nb_seats_corr %> places disponibles<% } else { %> 
+								<i class="fas fa-times text-warning mr-2"></i>Couloir : 0 places disponibles <% } %> 
+							</div>
+							<div>
+								<% if (travel.nb_seats_win) { %>
+								<i class="fas fa-check text-success mr-2"></i>Fenêtre : <%= travel.nb_seats_corr %> places disponibles<% } else { %> 
+								<i class="fas fa-times text-danger mr-2"></i>Fenêtre : 0 places disponibles <% } %> 
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container rounded mt-5 mb-2 bg-light p-3">
+			<div class="h-5"><strong>Prix (standard) :</strong> <%= travel.price %>&euro;</div>
+			<div><strong>Carte de réduction : </strong> <%= user.discountDesc %> <% if (user.discountPercent > 0) { %>
+			
+				 (-<%= user.discountPercent*100 %> &#x25; sur tous vos trajets)<% } %></div>
+			<hr>
+			<div><strong>Total :</strong> <%= travel.price*(1-user.discountPercent) %>&euro;</div>
+			<div class="mt-2" id="actions" style="text-align: center!important;">
+				<a href="" class="btn btn-outline-success mr-4" id="validate" role="button">Valider</a>
+				<a href="/booking" class="btn btn-outline-danger ml-4" id="cancel" role="button">Annuler</a>
+			</div>
+
+			<div id="messageDiv" hidden></div>
+		</div>
+
+		<% } %>
+	</body>
+
+</html>
+
