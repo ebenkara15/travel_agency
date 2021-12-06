@@ -255,3 +255,11 @@ SET    t.nb_seats_corr = IF(NEW.side='corr', t.nb_seats_corr - 1, t.nb_seats_cor
 WHERE NEW.idtravel = t.idtravel;
 END */;;
 
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `ticket_AFTER_DELETE` AFTER DELETE ON `ticket` FOR EACH ROW BEGIN
+UPDATE travel t
+SET    t.nb_seats_corr = IF(OLD.side='corr', t.nb_seats_corr + 1, t.nb_seats_corr),
+	   t.nb_seats_win = IF(OLD.side='win', t.nb_seats_win + 1, t.nb_seats_win)
+WHERE OLD.idtravel = t.idtravel;
+END */;;
+
