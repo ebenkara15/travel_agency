@@ -1,5 +1,4 @@
-# travel_agency
-Agence de voyage SNCF - MOD
+# Agence de voyage SNCF - MOD
 
 Application Web écrite en NodeJS pour la gestion d'une agence de voyage. Base de données écrite avec MySQL.
 
