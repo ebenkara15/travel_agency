@@ -228,4 +228,20 @@ router.get('/travel/:id/confirm', function(req, res, next) {
     });
 })
 
+/* GET Cancel a ticket for a given user */
+router.get('/travel/:id/cancel', function(req, res, next){
+    var travelID = parseInt(req.params['id']);
+    var user = req.cookies.user;
+
+    var stmt = "DELETE FROM ticket WHERE (ticket.idclient = ? AND ticket.idtravel = ?)";
+
+    con.query(stmt, [user.userID, travelID], (err, data) => {
+        if (err) throw err;
+        
+        console.log("Annulation du billet");
+
+        res.redirect('/users/account');
+    })
+})
+
 module.exports = router;

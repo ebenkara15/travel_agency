@@ -1,6 +1,7 @@
 var express = require('express');
 var con = require('../service/db');
 var crypto = require('crypto');
+var moment = require('moment');
 
 /***************************/
 /* DB Connection           */
@@ -63,7 +64,7 @@ router.get('/logout', function(req, res, next) {
 	});
 });
 
-/* GET (redirect) login page from home page /users*/
+/* GET (redirect) login page from home page /users */
 router.get('/', function(req, res, next) {
   	res.redirect('/login')
 });

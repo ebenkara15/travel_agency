@@ -74,6 +74,7 @@
                             </div>
                             <div class="ml-auto">
                                 <a href="/booking/travel/<%= travels[i].idtravel %>/confirm" class="btn btn-warning">Consulter votre billet</a>
+                                <a href="/booking/travel/<%= travels[i].idtravel %>/cancel" class="btn btn-danger mt-1">Annuler votre billet</a>
                             </div>
                         </div>
                         <% } else { %>
@@ -89,7 +90,7 @@
                 <% } %>
                 
                 
-                <% if (locals.travel) { %> 
+                <% if (locals.tickets) { %> 
                     <div class="container">
                         <h6 class="mb-2">Voyages passés</h6>
 
